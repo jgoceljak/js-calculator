@@ -3,6 +3,7 @@ let secondNumber =  "";
 let currentNumber = ""
 let operation = "";
 let currentNum = 1
+let clearLevel = 0;
 
 const digits = document.querySelector(".digits")
 digits.addEventListener("click", (e) => {
@@ -48,18 +49,25 @@ function setOperation(operator) {
 
 function setNumber(n) {
     if (currentNum == 1) {
+       clearLevel = 0
        firstNumber = firstNumber + "" + n
        updateDisplay(firstNumber)
     }
     else {
+       clearLevel = 1
        secondNumber = secondNumber + "" + n
        updateDisplay(secondNumber)
     }
 }
 
 function updateDisplay(show) {
+   if (show != "") {
    const display = document.querySelector('.display')
    display.textContent = show
+   } else {
+    const display = document.querySelector('.display')
+   display.textContent = "0"
+   }
 }
 
 function evaluate() {
@@ -67,21 +75,39 @@ function evaluate() {
     switch(operation) {
         case "+":
             result = Number(firstNumber) + Number(secondNumber)
+            clearLevel = 0;
             updateDisplay(result)
             return result
         case "-":
             result = Number(firstNumber) - Number(secondNumber)
+            clearLevel = 0;
             updateDisplay(result)
             return result
         case "*":
             result = Number(firstNumber) * Number(secondNumber)
+            clearLevel = 0;
             updateDisplay(result)
             return result
         case "/":
             result = Number(firstNumber) / Number(secondNumber)
+            clearLevel = 0;
             updateDisplay(result)
             return result
         default:
           
       }
     }
+
+function clearCalculator() {
+    if (clearLevel == 1) {
+        secondNumber = ""
+        updateDisplay(secondNumber)
+        clearLevel = 0
+    } else {
+        currentNum = 1
+        firstNumber = ""
+        updateDisplay(firstNumber)
+        secondNumber = ""
+        operation = ""
+    }
+}
