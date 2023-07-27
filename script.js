@@ -34,6 +34,7 @@ clrBtn.onclick = () => clearCalculator()
 function setOperation(operator) {
     if (operation != "") {
         firstNumber = evaluate()
+        updateDisplay(operation)
         secondNumber = ""
         if (operator != "=") {
            operation = operator
@@ -41,6 +42,7 @@ function setOperation(operator) {
     } else {
         console.log("setting operator")
         operation = operator
+        updateDisplay(operation)
         currentNum = 2;
     }
     

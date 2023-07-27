@@ -12,6 +12,10 @@ body {
     border-color: black;
     font-size: 40px;
 }
+
+.display {
+    text-align: right;
+}
 .buttons {
     display: flex;
 }
