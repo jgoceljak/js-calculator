@@ -57,24 +57,40 @@ function setOperation(operator) {
 function setNumber(n) {
     if (hitEquals){
         console.log("resetting")
+        if (n == 0) {
+            console.log("running first")
+            firstNumber = ""
+        } else {
+        console.log("running second")
         firstNumber =  "" + n
-        currentNum = 1
+        }
+        currentNum = 1;
         updateDisplay(firstNumber)
         secondNumber = ""
         operation = ""
         hitEquals = false
+        console.log(firstNumber)
+    
     } else {
     if (currentNum == 1) {
-        console.log("setting first")
+        if ((firstNumber == "" || firstNumber == "0") && n == 0) {
+            return;
+        } else {
+       console.log("setting first")
        clearLevel = 0
        firstNumber = firstNumber + "" + n
        updateDisplay(firstNumber)
+        }
     }
     else {
+        if ((secondNumber == "" || secondNumber == "0") && n == 0) {
+            return;
+        } else {
         console.log("setting second")
        clearLevel = 1
        secondNumber = secondNumber + "" + n
        updateDisplay(secondNumber)
+        }
     }
 }
 }
