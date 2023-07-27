@@ -34,10 +34,10 @@ clrBtn.onclick = () => clearCalculator()
 function setOperation(operator) {
     if (operation != "") {
         firstNumber = evaluate()
-        updateDisplay(operation)
         secondNumber = ""
         if (operator != "=") {
            operation = operator
+           updateDisplay(operation)
         }
     } else {
         console.log("setting operator")
