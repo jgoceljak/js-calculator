@@ -4,12 +4,13 @@ let currentNumber = ""
 let operation = "";
 let currentNum = 1
 let clearLevel = 0;
+let justOperated = false;
 let hitEquals = false;
 
 const digits = document.querySelector(".digits")
 digits.addEventListener("click", (e) => {
     const isButton = e.target.nodeName === 'BUTTON';
-    if (!isButton || e.target.id == 'clear') {
+    if (!isButton || e.target.id == 'clear' || e.target.id == 'negative') {
         return;
     }
     let buttonId = e.target.id
@@ -24,6 +25,7 @@ const divBtn = document.getElementById('divide')
 const mulBtn = document.getElementById('multiply')
 const eqlBtn = document.getElementById('equals')
 const clrBtn = document.getElementById('clear')
+const ngtBtn = document.getElementById('negative')
 
 addBtn.onclick = () => setOperation("+")
 subBtn.onclick = () => setOperation("-")
@@ -31,6 +33,7 @@ divBtn.onclick = () => setOperation("/")
 mulBtn.onclick = () => setOperation("*")
 eqlBtn.onclick = () => evaluate(true)
 clrBtn.onclick = () => clearCalculator()
+ngtBtn.onclick = () => negative()
 
 function setOperation(operator) {
     if (operation != "") {
@@ -53,6 +56,31 @@ function setOperation(operator) {
     
 }
 
+function negative(){
+    if (justOperated) {
+           return;
+    }
+    if (currentNum == 1){
+           let realValue = Number(firstNumber)
+           if (realValue > 0) {
+            firstNumber = "-" + firstNumber
+           } else {
+            firstNumber = "" + Math.abs(realValue)
+           }
+           console.log(firstNumber)
+           updateDisplay(firstNumber)
+    } else {
+        let realValue = Number(secondNumber)
+        if (realValue > 0) {
+         secondNumber = "-" + secondNumber
+        } else {
+         secondNumber = "" + Math.abs(realValue)
+        }
+        updateDisplay(secondNumber)
+
+    }
+}
+
 
 function setNumber(n) {
     if (hitEquals){
@@ -70,6 +98,7 @@ function setNumber(n) {
         operation = ""
         hitEquals = false
         console.log(firstNumber)
+        justOperated = false;
     
     } else {
     if (currentNum == 1) {
@@ -81,6 +110,7 @@ function setNumber(n) {
        firstNumber = firstNumber + "" + n
        updateDisplay(firstNumber)
         }
+        justOperated = false;
     }
     else {
         if ((secondNumber == "" || secondNumber == "0") && n == 0) {
@@ -91,6 +121,7 @@ function setNumber(n) {
        secondNumber = secondNumber + "" + n
        updateDisplay(secondNumber)
         }
+        justOperated = false;
     }
 }
 }
@@ -115,14 +146,16 @@ function evaluate(equals) {
             if (equals) {
                 hitEquals = true;
             }
+            justOperated = true;
             return result;
         case "-":
             result = Number(firstNumber) - Number(secondNumber)
             clearLevel = 0;
             updateDisplay(result)
             if (equals) {
-  
+                hitEquals = true;
             }
+            justOperated = true;
             return result
         case "*":
             result = Number(firstNumber) * Number(secondNumber)
@@ -131,6 +164,7 @@ function evaluate(equals) {
             if (equals) {
                 hitEquals = true;
             }
+            justOperated = true;
             return result
         case "/":
             result = Number(firstNumber) / Number(secondNumber)
@@ -139,6 +173,7 @@ function evaluate(equals) {
             if (equals) {
                 hitEquals = true;
             }
+            justOperated = true;
             return result
         default:
           
